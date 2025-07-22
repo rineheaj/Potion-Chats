@@ -1,0 +1,111 @@
+body {
+    background: black;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    padding: 50px;
+}
+
+.hidden {
+    display: none;
+}
+
+input {
+    font-size: 1.1em;
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+
+input:focus {
+    background-color: #222;
+    color: aquamarine;
+    border: 1px solid aquamarine;
+    box-shadow: 0 0 8px aquamarine;
+    outline: none;
+}
+
+
+button {
+    font-size: 1.1em;
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #222;
+    color: cyan;
+    cursor: pointer;
+}
+
+textarea {
+    font-size: 1.1em;
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    width: 80%;
+    height: 80px;
+    box-sizing: border-box;
+}
+
+
+#rightAboveTokenSection {
+    font-size: large;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#tokenSection {
+    font: 1em sans-serif;
+    color: aqua;
+    border: none;
+}
+
+#response {
+    margin-top: 20px;
+    font-size: 1.5em;
+    transition: all 0.5s ease;
+}
+
+.glow {
+    color: lime;
+    text-shadow: 0 0 10px lime, 0 0 20px lime;
+    animation: pulseGlow 1s ease-in-out infinite alternate;
+}
+
+.fail {
+    color: red;
+    text-shadow: 0 0 10px red, 0 0 20px darkred;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+}
+.shake {
+    animation: shake 0.4s ease-in-out;
+}
+
+@keyframes pulseGlow {
+    from {
+        text-shadow:  0 0 5px lime, 0 0 10px lime;
+    }
+    to {
+        text-shadow: 0 0 20px lime, 0 0 40px lime;
+    }
+}
+
+@keyframes flashRed {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.10; }
+}
+.flash {
+    animation: flashRed 0.5s ease-in-out;
+}
+
+

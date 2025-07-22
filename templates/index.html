@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Acess Portal{% endblock %}
+
+{% block content %}
+    <h1>Only Certain People Are Allowed In.<br>Will You Be One Of Them?</br></h1>
+    <input
+        type="text"
+        id="usernameInput"
+        placeholder="Enter the secret phrase"
+    />
+    <button onclick="loginAndGlow()">Login & Get Token</button>
+
+    <div id="rightAboveTokenSection" class="hidden">
+        
+    </div>
+
+    <div id="tokenSection" class="hidden">
+        <textarea id="tokenBox" readonly></textarea>
+        <button onclick="unlockGlow()">Unlock Secret Glow</button>
+    </div>
+
+    <div id="response"></div>
+{% endblock %}
+

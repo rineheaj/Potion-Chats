@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Room {{ room_id }}{% endblock %}
+
+{% block content %}
+  <h1>🔒 Secret Chatroom {{ room_id }}</h1>
+
+  <section id="guessSection">
+    <p>Guess the number (1-5) to enter:</p>
+    <input
+      id="guessInput"
+      type="number"
+      min="1"
+      max="5"
+      placeholder="0"
+      data-room-id="{{ room_id }}"
+    />
+    <button id="guessBtn" data-room-id="{{ room_id }}">
+      Try Your Luck
+    </button>
+    <div id="guessResponse" class="hidden"></div>
+  </section>
+
+  <section id="chatArea" class="hidden">
+    <h2>Welcome to Chatroom {{ room_id }}</h2>
+    <div id="messages"></div>
+    <input id="messageInput" placeholder="Type a message…" data-room-id="{{ room_id }}"/>
+    <button id="sendMsgBtn" data-room-id="{{ room_id }}">Send</button>
+  </section>
+{% endblock %}
