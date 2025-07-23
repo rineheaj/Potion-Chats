@@ -145,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const guessBtn = document.getElementById("guessBtn");
   if (guessBtn) {
     guessBtn.addEventListener("click", () =>
-      submitGuess(guessBtn.dataset.roomId)
+      submitGuess(guessBtn.dataset.roomID)
     );
   }
 
