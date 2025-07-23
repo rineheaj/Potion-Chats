@@ -12,9 +12,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+SECRET_CODE = os.getenv("SECRET_BUDDY_CODE")
 SECRET_KEY = os.getenv("SECRET_KEY")
-if not SECRET_KEY:
-    raise RuntimeError("Missing SECRET_KEY from .env file")
+if not SECRET_KEY or not SECRET_CODE:
+    raise RuntimeError("Missing SECRET_KEY or SECRET_BUDDY_CODE from .env file")
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = SECRET_KEY
