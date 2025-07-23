@@ -90,7 +90,7 @@ function showChatInterface(roomID) {
     fetchMessages(roomID);
 
     if (messageInterval) clearInterval(messageInterval);
-    messageInterval = setInterval(() => fetchMessages(roomID), 3000)
+    messageInterval = setInterval(() => fetchMessages(roomID), 2000)
 }
 
 async function fetchMessages(roomID) {
