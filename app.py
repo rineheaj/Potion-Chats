@@ -77,6 +77,8 @@ def gen_token():
     token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
     logging.info(f"Issued token for {display_name}")
 
+    session["displayName"] = display_name
+
     response = make_response(jsonify({"success": True}), 200)
     response.set_cookie(
         "jwt",

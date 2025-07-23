@@ -164,6 +164,7 @@ textarea {
     gap: 12px;
     max-height: 60vh;
     overflow-y: auto;
+    overflow-x: auto;
     padding: 10px;
 }
 
@@ -227,8 +228,8 @@ textarea {
 }
 
 .msg-bubble.mine {
-    background:  hotpink !important;
-    border: 2px solid deeppink !important;
+    background: darkslateblue !important;
+    border: 2px solid darkslateblue !important;
 }
 
 .msg-bubble.other {
