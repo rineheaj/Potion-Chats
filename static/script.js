@@ -103,11 +103,25 @@ async function fetchMessages(roomID) {
 
   const msgs = await response.json();
   const container = document.getElementById("messages");
+  const currentUser = container.dataset.currentUser;
   container.innerHTML = "";
 
   msgs.forEach(entry => {
     const msgDiv = document.createElement("div");
-    msgDiv.textContent = `${entry.user}: ${entry.message}`;
+    msgDiv.classList.add("msg-bubble");
+
+    if (entry.user === currentUser) {
+        msgDiv.classList.add("mine");
+    } else {
+        msgDiv.classList.add("other");
+    }
+
+
+    msgDiv.innerHTML = `
+        <span class="msg-user">${entry.user}</span>
+        <span class="msg-text">${entry.message}</span>
+    `;
+
     container.appendChild(msgDiv);
   });
 }
