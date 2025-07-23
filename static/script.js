@@ -145,14 +145,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const guessBtn = document.getElementById("guessBtn");
   if (guessBtn) {
     guessBtn.addEventListener("click", () =>
-      submitGuess(guessBtn.dataset.roomID)
+      submitGuess(guessBtn.dataset.roomId)
     );
   }
 
   const sendBtn = document.getElementById("sendMsgBtn");
   if (sendBtn) {
     sendBtn.addEventListener("click", () =>
-      sendMessage(sendBtn.dataset.roomID)
+      sendMessage(sendBtn.dataset.roomId)
     );
   }
 });
