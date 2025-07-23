@@ -1,41 +1,45 @@
 
+let messageInterval = null;
 
+
+// function authHeaders() {
+//     const token = localStorage.getItem("jwt");
+//     return {
+//         "Content-Type": "application/json",
+//         "Authorization": `Bearer ${token}`
+//     };
+// }
 
 async function loginAndGlow() {
-    const username = document.getElementById(`usernameInput`).value;
+    const code = document.getElementById(`usernameInput`).value;
+    const displayName = document.getElementById("displayNameInput").value.trim();
     const response = await fetch("/get-token", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username })
+        body: JSON.stringify({ username: code, displayName }),
+        credentials: "same-origin"
     });
 
     const data = await response.json();
     if (response.ok) {
-        const tokenBox = document.getElementById("tokenBox");
-        tokenBox.value = data.token;
-
-        document.getElementById("tokenSection").classList.remove("hidden")
-        showAboveToken("JWT Token generated below", "flash glow");
+        window.location.href = "/rooms";
     } else {
-        document.getElementById("tokenSection").classList.add("hidden");
-        document.getElementById("rightAboveTokenSection").classList.add("hidden");
         showResponse(data.error, "fail flash");
     }
 }
 
 
 async function unlockGlow() {
-    const token = document.getElementById("tokenBox").value.trim();
     showResponse("Token sent! Check console for details if needed.", "glow flash")
 
     const response = await fetch("/secure-endpoint", {
         method: "GET",
-        headers: { Authorization: "Bearer " + token }
+        credentials: "same-origin"
     });
-
     const data = await response.json();
 
     if (response.ok) {
+
         showResponse(data.message, "glow");
     } else {
         showResponse(data.error, "fail shake");
@@ -45,13 +49,10 @@ async function unlockGlow() {
 function showResponse(message, className) {
     const box = document.getElementById("response");
     box.textContent = message;
-
     box.classList.remove("glow", "fail", "shake", "flash");
     void box.offsetWidth;
-
-    className.split(" ").forEach(c => {
-        box.classList.add(c);
-    });
+    className.split(" ").forEach(c => box.classList.add(c));
+    box.classList.remove("hidden")
 }
 
 
@@ -68,6 +69,7 @@ async function submitGuess(roomID) {
 
     const response = await fetch(`/room/${roomID}/guess`, {
         method: "POST",
+        credentials: "same-origin",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ guess })
     });
@@ -83,30 +85,45 @@ async function submitGuess(roomID) {
 
 function showChatInterface(roomID) {
     document.getElementById("guessSection").classList.add("hidden");
+    document.getElementById("chatArea").classList.remove("hidden");
 
-    const chatArea = document.getElementById("chatArea");
-    chatArea.classList.remove("hidden");
+    fetchMessages(roomID);
+
+    if (messageInterval) clearInterval(messageInterval);
+    messageInterval = setInterval(() => fetchMessages(roomID), 2000)
 }
 
+async function fetchMessages(roomID) {
+  const response = await fetch(`/room/${roomID}/messages`, {
+    method: "GET",
+    credentials: "same-origin",
+    headers: { "Content-Type": "application/json" },
+  });
+  if (!response.ok) return;
+
+  const msgs = await response.json();
+  const container = document.getElementById("messages");
+  container.innerHTML = "";
+
+  msgs.forEach(entry => {
+    const msgDiv = document.createElement("div");
+    msgDiv.textContent = `${entry.user}: ${entry.message}`;
+    container.appendChild(msgDiv);
+  });
+}
 
 async function sendMessage(roomID) {
     const input = document.getElementById("messageInput");
     const text = input.value.trim();
     
-    if (!text) {
-        return
-    }
-
-    const response = await fetch(`/room/${roomID}/chat`, {
+    if (!text) return;
+    
+    await fetch(`/room/${roomID}/chat`, {
         method: "POST",
+        credentials: "same-origin",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: text })
     });
-    const data = await response.json();
-
-    const msgDiv = document.createElement("div");
-    msgDiv.textContent = data.message;
-    document.getElementById("messages").appendChild(msgDiv);
 
     input.value = ""
 }
@@ -119,9 +136,7 @@ function showAboveToken(message, className = "") {
     void box.offsetWidth;
 
     if (className) {
-        className.split(" ").forEach(c => {
-            box.classList.add(c);
-        });
+        className.split(" ").forEach(c => box.classList.add(c));
     }
 }
 

@@ -109,3 +109,49 @@ textarea {
 }
 
 
+.theme-vaporwave {
+    background: linear-gradient(to right, #ff8ae2, #8affff);
+    color: #fff;
+    font-family: 'Courier New', Courier, monospace;
+    text-shadow: 0 0 5px #fff
+}
+
+.theme-arcade {
+    background: repeating-linear-gradient(
+        45deg,
+        #000,
+        #000 10px,
+        #00ff00 10px,
+        #00ff00 20px
+    );
+    color: lime;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    animation: flicker 1s infinite;
+}
+
+.theme-neon-noir {
+    background: radial-gradient(circle at center, #1a1a2e 0%, #000000 100%);
+    color: #e94560;
+    text-shadow: 0 0 10px #e94560;
+}
+
+.theme-cyber-green {
+    background: linear-gradient(to bottom #003300, #00ff00);
+    color: #00ff00;
+    box-shadow: inset 0 0 10px #00ff00;
+}
+
+.theme-crimson-fuzz {
+    background: linear-gradient(45deg, #8b0000, #ff0000);
+    color: #fff;
+    font-family: 'Courier New', Courier, monospace;
+    letter-spacing: 1px;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+  60% { opacity: 0.9; }
+  70% { opacity: 0.95; }
+  80% { opacity: 0.85; }
+}
