@@ -90,7 +90,7 @@ function showChatInterface(roomID) {
     fetchMessages(roomID);
 
     if (messageInterval) clearInterval(messageInterval);
-    messageInterval = setInterval(() => fetchMessages(roomID), 2000)
+    messageInterval = setInterval(() => fetchMessages(roomID), 3000)
 }
 
 async function fetchMessages(roomID) {
@@ -152,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const sendBtn = document.getElementById("sendMsgBtn");
   if (sendBtn) {
     sendBtn.addEventListener("click", () =>
-      sendMessage(sendBtn.dataset.roomId)
+      sendMessage(sendBtn.dataset.roomID)
     );
   }
 });
