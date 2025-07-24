@@ -83,7 +83,7 @@ def gen_token():
         "jwt",
         token,
         httponly=True,
-        secure=False,
+        secure=True,
         samesite="Strict",
         max_age= 60 * 60
     )
