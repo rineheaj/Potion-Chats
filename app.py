@@ -42,8 +42,6 @@ def token_required(function):
         if not token:
             return jsonify({"error": "Missing auth token"}), 401
 
-        
-
         try:
             payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
             g.current_user = payload["user"]
@@ -192,6 +190,21 @@ def get_messages(room_id):
 
 def main():
     app.run(debug=True)
+
+def create_app():
+    load_dotenv()
+    secret_code = os.getenv("SECRET_BUDDY_CODE")
+    secret_key = os.getenv("SECRET_KEY")
+    if not secret_key or not secret_code:
+        raise RuntimeError("Missing SECRET_KEY or SECRET_BUDDY_CODE")
+    
+    app = Flask(__name__)
+    app.config["SECRET_KEY"] = SECRET_KEY
+
+    @app.route("/")
+    def home():
+        return render_template("index.html")
+    return app
 
 
 if __name__ == "__main__":
