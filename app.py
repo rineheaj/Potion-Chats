@@ -22,9 +22,16 @@ app.config["SECRET_KEY"] = SECRET_KEY
 
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["SESSION_PERMANENT"] = False
+app.config.update({
+    "SESSION_COOKIE_SECURE": True,
+    "SESSION_COOKIE_HTTPONLY": True,
+    "SESSION_COOKIE_SAMESITE": "Strict",
+})
+
 Session(app)
 
-CORS(app)
+CORS(app, origins=["https://your-app.onrender.com"], supports_credentials=True)
+
 logging.basicConfig(level=logging.INFO)
 
 MESSAGES = {}
