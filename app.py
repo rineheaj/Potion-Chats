@@ -30,7 +30,7 @@ app.config.update({
 
 Session(app)
 
-CORS(app, origins=["https://your-app.onrender.com"], supports_credentials=True)
+CORS(app, origins=["https://potion-chats.onrender.com"], supports_credentials=True)
 
 logging.basicConfig(level=logging.INFO)
 
