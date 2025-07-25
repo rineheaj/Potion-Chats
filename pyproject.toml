@@ -13,4 +13,5 @@ dependencies = [
     "gunicorn>=23.0.0",
     "flask-session>=0.8.0",
     "pytest>=8.4.1",
+    "requests>=2.32.4",
 ]
