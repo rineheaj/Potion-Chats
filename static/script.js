@@ -128,6 +128,8 @@ async function fetchMessages(roomID) {
     msgDiv.appendChild(userSpan);
     msgDiv.appendChild(textSpan);
 
+    container.appendChild(msgDiv);
+    
   });
 }
 
