@@ -117,12 +117,17 @@ async function fetchMessages(roomID) {
     }
 
 
-    msgDiv.innerHTML = `
-        <span class="msg-user">${entry.user}</span>
-        <span class="msg-text">${entry.message}</span>
-    `;
+    const userSpan = document.createElement("span");
+    userSpan.classList.add("msg-user");
+    userSpan.textContent = entry.user;
 
-    container.appendChild(msgDiv);
+    const textSpan = document.createElement("span");
+    textSpan.classList.add("msg-text");
+    textSpan.textContent = entry.message;
+
+    msgDiv.appendChild(userSpan);
+    msgDiv.appendChild(textSpan);
+
   });
 }
 
