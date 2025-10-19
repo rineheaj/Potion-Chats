@@ -22,11 +22,13 @@ app.config["SECRET_KEY"] = SECRET_KEY
 
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["SESSION_PERMANENT"] = False
-app.config.update({
-    "SESSION_COOKIE_SECURE": True,
-    "SESSION_COOKIE_HTTPONLY": True,
-    "SESSION_COOKIE_SAMESITE": "Strict",
-})
+app.config.update(
+    {
+        "SESSION_COOKIE_SECURE": True,
+        "SESSION_COOKIE_HTTPONLY": True,
+        "SESSION_COOKIE_SAMESITE": "Strict",
+    }
+)
 
 Session(app)
 
@@ -41,11 +43,11 @@ def token_required(function):
     @wraps(function)
     def wrapper(*args, **kwargs):
         token = request.cookies.get("jwt")
-        
+
         auth_header = request.headers.get("Authorization", "")
         if not token and auth_header.startswith("Bearer "):
             token = auth_header.split(" ", 1)[1]
-        
+
         if not token:
             return jsonify({"error": "Missing auth token"}), 401
 
@@ -70,7 +72,6 @@ def home():
 def gen_token():
     code = request.json.get("username")
     display_name = request.json.get("displayName")
-    
 
     if code != SECRET_CODE or not display_name:
         return jsonify({"error": "Wrong code or missing chat name 😞"}), 401
@@ -87,15 +88,9 @@ def gen_token():
 
     response = make_response(jsonify({"success": True}), 200)
     response.set_cookie(
-        "jwt",
-        token,
-        httponly=True,
-        secure=True,
-        samesite="Strict",
-        max_age= 60 * 60
+        "jwt", token, httponly=True, secure=True, samesite="Strict", max_age=60 * 60
     )
     return response
-
 
 
 @app.route("/secure-endpoint", methods=["GET"])
@@ -108,7 +103,13 @@ def secure_endpoint():
         token = auth_header.split()[1]
         try:
             jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
-            return jsonify({"message": "Welcome to the cool kid's club!"}), 200
+            return jsonify(
+                {
+                    "user": g.current_user,
+                    "status": "active",
+                    "message": "Welcome to the cool kid's club!",
+                }
+            ), 200
         except jwt.ExpiredSignatureError:
             return jsonify({"error": "Your token is expired."}), 401
         except jwt.InvalidTokenError:
@@ -156,10 +157,11 @@ def room(room_id):
 
     return render_template("room.html", room_id=room_id, theme_class=theme_class)
 
+
 @app.route("/rooms")
 @token_required
 def rooms():
-    return render_template("rooms.html", rooms=range(1,6))
+    return render_template("rooms.html", rooms=range(1, 6))
 
 
 @app.route("/room/<int:room_id>/chat", methods=["POST"])
@@ -198,19 +200,21 @@ def get_messages(room_id):
 def main():
     app.run(debug=True)
 
+
 def create_app():
     load_dotenv()
     secret_code = os.getenv("SECRET_BUDDY_CODE")
     secret_key = os.getenv("SECRET_KEY")
     if not secret_key or not secret_code:
         raise RuntimeError("Missing SECRET_KEY or SECRET_BUDDY_CODE")
-    
+
     app = Flask(__name__)
     app.config["SECRET_KEY"] = SECRET_KEY
 
     @app.route("/")
     def home():
         return render_template("index.html")
+
     return app
 
 
