@@ -17,6 +17,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 if not SECRET_KEY or not SECRET_CODE:
     raise RuntimeError("Missing SECRET_KEY or SECRET_BUDDY_CODE from .env file")
 
+
 app = Flask(__name__)
 app.config["SECRET_KEY"] = SECRET_KEY
 
@@ -82,6 +83,7 @@ def gen_token():
         + datetime.timedelta(hours=1),
     }
     token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
+
     logging.info(f"Issued token for {display_name}")
 
     session["displayName"] = display_name
