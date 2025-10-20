@@ -39,6 +39,15 @@ logging.basicConfig(level=logging.INFO)
 
 MESSAGES = {}
 
+ROOM_THEMES = {
+    1: {"class": "theme-vaporwave", "color": "magenta"},
+    2: {"class": "theme-arcade", "color": "lime"},
+    3: {"class": "theme-neon-noir", "color": "cyan"},
+    4: {"class": "theme-cyber-green", "color": "green"},
+    5: {"class": "theme-crimson-fuzz", "color": "crimson"},
+    6: {"class": "theme-ocean-dream", "color": "#00bfff"},
+}
+
 
 def token_required(function):
     @wraps(function)
@@ -135,7 +144,7 @@ def check_guess(room_id):
     elif guess > secret:
         result = "Too high 🥲"
     else:
-        result = "Correct! Welcome in friend 👋"
+        result = "Correct! 🎃"
         session[f"room_{room_id}_access"] = True
 
     return jsonify({"result": result})
@@ -148,22 +157,20 @@ def room(room_id):
     if key not in session:
         session[key] = random.randint(1, 5)
 
-    themes = {
-        1: "theme-vaporwave",
-        2: "theme-arcade",
-        3: "theme-neon-noir",
-        4: "theme-cyber-green",
-        5: "theme-crimson-fuzz",
-    }
-    theme_class = themes.get(room_id, "theme-default")
+    theme = ROOM_THEMES.get(room_id, {"class": "theme-default", "color": "gray"})
 
-    return render_template("room.html", room_id=room_id, theme_class=theme_class)
+    return render_template(
+        "room.html",
+        room_id=room_id,
+        theme_class=theme["class"],
+        theme_color=theme["color"],
+    )
 
 
 @app.route("/rooms")
 @token_required
 def rooms():
-    return render_template("rooms.html", rooms=range(1, 6))
+    return render_template("rooms.html", rooms=ROOM_THEMES)
 
 
 @app.route("/room/<int:room_id>/chat", methods=["POST"])
@@ -199,6 +206,11 @@ def get_messages(room_id):
     return jsonify(MESSAGES.get(room_id, [])), 200
 
 
+
+
+
+
+### ONLY NEEDED IF THERE IS MORE THAN ONE CONFIG
 def main():
     app.run(debug=True)
 

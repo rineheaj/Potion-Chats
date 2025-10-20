@@ -1,13 +1,20 @@
 {% extends "base.html" %}
-
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='themes.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='rooms.css') }}">
+{% endblock %}
 {% block title %}Choose Your Room{% endblock %}
 
 {% block content %}
-<h2>Select a Room</h2>
+<h2>Choose Wisely</h2>
 <ul>
-    {% for id in rooms %}
+    {% for id, theme in rooms.items() %}
     <li>
-        <a href="/room/{{ id }}">Enter Room {{ id }}</a>
+        <a href="/room/{{ id }}" 
+        class="{{ theme.class }}" 
+        style="--glow-color: {{ theme.color }}">
+            Enter Room {{ id }}
+        </a>
     </li>
     {% endfor %}
 </ul>

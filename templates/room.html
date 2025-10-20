@@ -1,21 +1,25 @@
 {% extends "base.html" %}
 
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='themes.css') }}">
+{% endblock %}
+
 {% block title %}Room {{ room_id }}{% endblock %}
 
 {% block content %}
 <h1>🔒 Secret Chatroom {{ room_id }}</h1>
 
-<section id="guessSection">
+<section id="guessSection" class="{{ theme_class }}" style="--glow-color: {{ theme_color }}">
   <p>Guess the number (1-5) to enter:</p>
   <input id="guessInput" type="number" min="1" max="5" placeholder="0" data-room-id="{{ room_id }}" />
-  <button id="guessBtn" data-room-id="{{ room_id }}">
+  <button class="guessBtn {{ theme_class }}" type="submit" data-room-id="{{ room_id }}">
     Try Your Luck
   </button>
   <div id="guessResponse" class="hidden"></div>
 </section>
 
+
 <section id="chatArea" class="hidden">
-  <h2>Welcome to Chatroom {{ room_id }}</h2>
   <div id="messages" data-current-user="{{ session['displayName'] }}"></div>
   <input id="messageInput" placeholder="Type a message…" data-room-id="{{ room_id }}" />
   <button id="sendMsgBtn" type="button" data-room-id="{{ room_id }}">Send</button>

@@ -24,37 +24,24 @@ async function loginAndGlow() {
     if (response.ok) {
         window.location.href = "/rooms";
     } else {
-        showResponse(data.error, "fail flash");
+        showResponse(data.error, "fail flash", "response");
     }
 }
 
 
-async function unlockGlow() {
-    showResponse("Token sent! Check console for details if needed.", "glow flash")
 
-    const response = await fetch("/secure-endpoint", {
-        method: "GET",
-        credentials: "same-origin"
-    });
-    const data = await response.json();
 
-    if (response.ok) {
+function showResponse(message, className, elementId) {
+    const box = document.getElementById(elementId);
+    if (!box) return;
 
-        showResponse(data.message, "glow");
-    } else {
-        showResponse(data.error, "fail shake");
-    }
-}
-
-function showResponse(message, className) {
-    const box = document.getElementById("response");
     box.textContent = message;
-    box.classList.remove("glow", "fail", "shake", "flash");
-    void box.offsetWidth;
-    className.split(" ").forEach(c => box.classList.add(c));
-    box.classList.remove("hidden")
-}
+    box.classList.remove("hidden");
 
+    box.className = " "; 
+    void box.offsetWidth;
+    box.className = className;
+}
 
 async function submitGuess(roomID) {
     const input = document.getElementById("guessInput");
@@ -62,8 +49,7 @@ async function submitGuess(roomID) {
     const guess = parseInt(input.value, 10);
 
     if (!guess || guess < 1 || guess > 5) {
-        responseBox.textContent = "Pick a number 1-5";
-        responseBox.classList.remove("hidden");
+        showResponse("Pick a number 1-5", "fail flash", "guessResponse")
         return;
     }
 
@@ -75,13 +61,21 @@ async function submitGuess(roomID) {
     });
 
     const data = await response.json();
-    responseBox.textContent = data.result;
-    responseBox.classList.remove("hidden");
+
+    showResponse(
+        data.result, 
+        data.result.startsWith("Correct") ? "success" : "fail flash", "guessResponse"
+    )
+    
 
     if (data.result.startsWith("Correct")) {
-        showChatInterface(roomID);
+        showResponse(data.result, "glow", "guessResponse");
+        setTimeout(() => {
+            showChatInterface(roomID);
+        }, 1000);
     }
 }
+
 
 function showChatInterface(roomID) {
     document.getElementById("guessSection").classList.add("hidden");
@@ -149,6 +143,7 @@ async function sendMessage(roomID) {
     input.value = ""
 }
 
+
 function showAboveToken(message, className = "") {
     const box = document.getElementById("rightAboveTokenSection");
 
@@ -163,12 +158,18 @@ function showAboveToken(message, className = "") {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  const guessBtn = document.getElementById("guessBtn");
-  if (guessBtn) {
-    guessBtn.addEventListener("click", () =>
-      submitGuess(guessBtn.dataset.roomId)
-    );
-  }
+//   const guessBtn = document.getElementById("guessBtn");
+//   if (guessBtn) {
+//     guessBtn.addEventListener("click", () =>
+//       submitGuess(guessBtn.dataset.roomId)
+//     );
+//   }
+
+  document.querySelectorAll(".guessBtn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        submitGuess(btn.dataset.roomId);
+    });
+  });
 
   const sendBtn = document.getElementById("sendMsgBtn");
   if (sendBtn) {

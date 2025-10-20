@@ -1,0 +1,91 @@
+.guessBtn {
+    background-color: #111;
+    color: #eee;
+    border: 2px solid;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.3s ease;
+    box-shadow: 0 0 5px var(--glow-color, transparent);
+}
+
+#guessResponse {
+    margin-top: 20px;
+    font-size: 1.5em;
+    transition: all 0.5s ease;
+    color: var(--glow-color, #eee);
+    text-shadow: 0 0 10px var(--glow-color, transparent);
+}
+
+
+
+.theme-vaporwave {
+    background: linear-gradient(to right, #ff8ae2, #8affff);
+    color: #fff;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+
+
+
+.theme-arcade {
+    background: repeating-linear-gradient(45deg,
+            #000,
+            #000 10px,
+            #00ff00 10px,
+            #00ff00 20px);
+    color: lime;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    animation: flicker 1s infinite;
+}
+
+.theme-neon-noir {
+    background: radial-gradient(circle at center, #1a1a2e 0%, #000000 100%);
+    color: #e94560;
+}
+
+.theme-cyber-green {
+    background: linear-gradient(to bottom #003300, #00ff00);
+    color: #00ff00;
+}
+
+.theme-crimson-fuzz {
+    background: linear-gradient(45deg, #8b0000, #ff0000);
+    color: #fff;
+    font-family: 'Courier New', Courier, monospace;
+    letter-spacing: 1px;
+}
+
+.theme-ocean-dream {
+    background: linear-gradient(to right, #001f3f, #0074d9);
+    color: #00bfff;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+
+@keyframes flicker {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+
+    60% {
+        opacity: 0.9;
+    }
+
+    70% {
+        opacity: 0.95;
+    }
+
+    80% {
+        opacity: 0.85;
+    }
+}

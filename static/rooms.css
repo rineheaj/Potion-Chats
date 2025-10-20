@@ -1,0 +1,29 @@
+ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+}
+
+ul li {
+    margin: 10px 0;
+}
+
+ul li a {
+    display: block;
+    padding: 12px 20px;
+    background: #111;
+    color: #eee;
+    text-decoration: none;
+    border-radius: 6px;
+    border: 2px solid var(--glow-color, cyan);
+    transition: all 0.3s ease;
+}
+
+ul li a:hover {
+    background: rgb(27, 120, 120);
+    color: #111;
+    box-shadow: 0 0 15px var(--glow-color, cyan);
+    transform: translateY(-2px);
+}
+
