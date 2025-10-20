@@ -75,7 +75,7 @@ def gen_token():
     display_name = request.json.get("displayName")
 
     if code != SECRET_CODE or not display_name:
-        return jsonify({"error": "Wrong code or missing chat name 😞"}), 401
+        return jsonify({"error": "Oops 😞"}), 401
 
     payload = {
         "user": display_name,
